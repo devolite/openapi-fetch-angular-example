@@ -15,8 +15,15 @@ export class AppComponent implements OnInit {
   constructor(private testApi: TestAPIService) {}
 
   async ngOnInit(): Promise<void> {
-    const { data, error } = await this.testApi.post('/pet/findByStatus');
+    const { data, error } = await this.testApi.get('/pet/{petId}', {
+      params: { path: { petId: 1 } },
+    });
 
-    console.log(data, error);
+    if (error) {
+      console.log('Error! Could not fetch data!');
+      return;
+    }
+
+    console.log('Data fetched successfully!', data);
   }
 }
